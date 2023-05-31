@@ -10,16 +10,13 @@ import matplotlib.pyplot as plt
 
 def main() : 
     st.title('K-Means 클러스터링 앱')
-    
     #1. csv 파일을 업로드 할 수 있다. 
-    csv_file = st.file_uploader('CSV 파일 업로드', type=['csv'])
+    csv_file = st.file_uploader('CSV 파일을 업로드하세요.', type=['csv'])
     if csv_file is not None:
         df = pd.read_csv( csv_file )
         st.dataframe( df )
-        
         st.subheader('Nan 데이터 확인')
         st.dataframe( df.isna().sum() )
-        
         st.subheader('결측값 처리한 결과')
         df = df.dropna()
         df.reset_index(inplace=True, drop=True)
