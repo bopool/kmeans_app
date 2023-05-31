@@ -56,6 +56,7 @@ def main() :
                 # 숫자 데이터일 때의 처리는 여기.
                 else:
                     X_new[name] = X[name]
+            st.text('')
 
             # 문자열을 숫자로 바꾼 것을 보여준다. 
             st.subheader('문자열은 숫자로 바꿔줍니다.')
