@@ -12,19 +12,23 @@ def main() :
     st.title('K-Means 클러스터링 앱')
     #1. csv 파일을 업로드 할 수 있다. 
     csv_file = st.file_uploader('CSV 파일을 업로드하세요.', type=['csv'])
+    st.text('')
     if csv_file is not None:
         df = pd.read_csv( csv_file )
         st.dataframe( df )
         st.subheader('Nan 데이터 확인')
         st.dataframe( df.isna().sum() )
+        st.text('')
+
         st.subheader('결측값 처리한 결과')
         df = df.dropna()
         df.reset_index(inplace=True, drop=True)
         st.dataframe( df )
+        st.text('')
 
         st.subheader('클러스터링에 사용할 컬럼 선택')
         selected_columns = st.multiselect('X로 사용할 컬럼을 선택하세요.', df.columns)
-        
+    
         if len(selected_columns) != 0:
             X = df[selected_columns]
             st.dataframe( X )
@@ -56,12 +60,14 @@ def main() :
             # 문자열을 숫자로 바꾼 것을 보여준다. 
             st.subheader('문자열은 숫자로 바꿔줍니다.')
             st.dataframe(X_new)
+            st.text('')
 
             # 피처 스케일링 한다. 
             st.subheader('피처 스케일링 합니다.')
             scaler = MinMaxScaler()
             X_new = scaler.fit_transform( X_new )
             st.dataframe( X_new )
+            st.text('')
 
             # 유저가 입력한 파일의 데이터 갯수를 세어서 
             # 해당 데이터의 갯수가 10보다 작으면 , 
@@ -90,26 +96,24 @@ def main() :
             plt.xlabel('Number of Clusters')
             plt.ylabel('WCSS')
             st.pyplot(fig)
+            st.text('')
 
             st.subheader('클러스터링 갯수 선택')
-
             k = st.number_input('k를 선택', 1, max_count, value=3)
-
             kmeans = KMeans(n_clusters =k, random_state = 5, n_init='auto')
-
             y_pred = kmeans.fit_predict(X_new)
-
             df['Group'] = y_pred
 
             st.subheader('그루핑 정보 표시')
             st.dataframe( df )
+            st.text('')
 
             st.subheader('보고 싶은 그룹 선택!')
             group_number = st.number_input('그룹번호 선택', 0, k-1)
 
             st.dataframe( df.loc[df['Group'] == group_number, ] ) # 안에서부터 만든다. 
-
             df.to_csv('result.csv', index=False)
+            st.text('')
 
 
 
