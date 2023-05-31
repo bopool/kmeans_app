@@ -103,6 +103,7 @@ def main() :
             kmeans = KMeans(n_clusters =k, random_state = 5, n_init='auto')
             y_pred = kmeans.fit_predict(X_new)
             df['Group'] = y_pred
+            st.text('')
 
             st.subheader('그루핑 정보 표시')
             st.dataframe( df )
